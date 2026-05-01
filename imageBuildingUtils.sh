@@ -44,7 +44,7 @@ ensure_iris_stopped() {
 
 	iris stop "$ISC_PACKAGE_INSTANCENAME" quietly "$1"
 	exit_if_error "Could not stop $ISC_PACKAGE_INSTANCENAME"
-	"$ISC_PACKAGE_INSTALLDIR"/dev/Cloud/ICM/waitISC.sh "$ISC_PACKAGE_INSTANCENAME" 60 "down"
+	"$ISC_PACKAGE_INSTALLDIR"/dev/Container/waitReady.sh -i "$ISC_PACKAGE_INSTANCENAME" -m 60 -g "down"
 	exit_if_error "Could not stop $ISC_PACKAGE_INSTANCENAME"
 
 	return 0;
@@ -56,7 +56,7 @@ start_iris_single_user() {
 	assert_defined "ISC_PACKAGE_INSTALLDIR"
 
 	iris start "$ISC_PACKAGE_INSTANCENAME" nostu
-	"$ISC_PACKAGE_INSTALLDIR"/dev/Cloud/ICM/waitISC.sh "$ISC_PACKAGE_INSTANCENAME" 60 "sign-on inhibited"
+	"$ISC_PACKAGE_INSTALLDIR"/dev/Container/waitReady.sh -i "$ISC_PACKAGE_INSTANCENAME" -m 60 -g "sign-on inhibited"
 	exit_if_error "Could not start $ISC_PACKAGE_INSTANCENAME in single-user mode"
 
 	return 0;
